@@ -137,7 +137,7 @@
             android:id="@+id/weather_forecast_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="10"/>
+            android:maxLines="10" />
 
     </ScrollView>
 
