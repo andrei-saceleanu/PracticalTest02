@@ -73,7 +73,7 @@ public class CommunicationThread extends Thread {
                 return;
             }
             HashMap<String, WeatherForecastInformation> data = serverThread.getData();
-            WeatherForecastInformation dataModel = null;
+            WeatherForecastInformation info = null;
 
 
             Log.i(Constants.TAG, "[COMMUNICATION THREAD] Getting the information from the webservice...");
@@ -101,15 +101,14 @@ public class CommunicationThread extends Thread {
             JSONObject curr    = bpi.getJSONObject(coin);
 
             String updateTimestamp = time.getString("updated");
-
             String rate = curr.getString("rate");
 
-            dataModel = new WeatherForecastInformation(rate, updateTimestamp);
+            info = new WeatherForecastInformation(rate, updateTimestamp);
 
-            data.put(coin, dataModel);
+            data.put(coin, info);
             serverThread.setData(data);
 
-            printWriter.println(dataModel);
+            printWriter.println(info);
             printWriter.flush();
 
         } catch (IOException ioException) {
