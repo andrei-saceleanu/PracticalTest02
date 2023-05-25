@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.practicaltest02.network;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,8 +13,10 @@ import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -183,6 +186,8 @@ public class CommunicationThread extends Thread {
             }
             printWriter.println(result);
             printWriter.flush();
+            final Drawable drawable = Drawable.createFromStream((InputStream) new URL("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png").getContent(),null);
+
         } catch (IOException ioException) {
             Log.e(Constants.TAG, "[COMMUNICATION THREAD] An exception has occurred: " + ioException.getMessage());
             if (Constants.DEBUG) {

@@ -8,7 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PracticalTest02.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PracticalTest02.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PracticalTest02.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PracticalTest02.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/httpclient-4.4.1.2/PracticalTest02.httpclient-4.4.1.2.iml" filepath="$PROJECT_DIR$/.idea/modules/httpclient-4.4.1.2/PracticalTest02.httpclient-4.4.1.2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jsoup-1.10.2/PracticalTest02.jsoup-1.10.2.iml" filepath="$PROJECT_DIR$/.idea/modules/jsoup-1.10.2/PracticalTest02.jsoup-1.10.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jsoup-1.16.1/PracticalTest02.jsoup-1.16.1.iml" filepath="$PROJECT_DIR$/.idea/modules/jsoup-1.16.1/PracticalTest02.jsoup-1.16.1.iml" />
     </modules>
   </component>
 </project>
