@@ -3,8 +3,8 @@ package ro.pub.cs.systems.eim.practicaltest02.model;
 public class WeatherForecastInformation {
 
 
-    String rate;
-    String updated;
+    public String rate;
+    public String updated;
 
     public WeatherForecastInformation(String rate, String updated) {
         this.rate    = rate;

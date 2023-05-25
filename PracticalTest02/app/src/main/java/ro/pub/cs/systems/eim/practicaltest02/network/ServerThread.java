@@ -17,7 +17,7 @@ public class ServerThread extends Thread {
     private int port = 0;
     private ServerSocket serverSocket = null;
 
-    public String last_update = null;
+    public long last_update = 0;
 
     private HashMap<String, WeatherForecastInformation> data = null;
 

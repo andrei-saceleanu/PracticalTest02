@@ -75,42 +75,47 @@ public class CommunicationThread extends Thread {
             HashMap<String, WeatherForecastInformation> data = serverThread.getData();
             WeatherForecastInformation info = null;
 
+            if(System.currentTimeMillis() - this.serverThread.last_update < 10000){
+                Log.i(Constants.TAG, "[COMMUNICATION THREAD] Getting the information from the cache...");
+                printWriter.println("Rate:" + data.get(coin).rate + "Updated at: " + this.serverThread.last_update);
+                printWriter.flush();
+            }else {
+                this.serverThread.last_update = System.currentTimeMillis();
+                Log.i(Constants.TAG, "[COMMUNICATION THREAD] Getting the information from the webservice...");
+                HttpClient httpClient = new DefaultHttpClient();
+                String pageSourceCode = "";
 
-            Log.i(Constants.TAG, "[COMMUNICATION THREAD] Getting the information from the webservice...");
-            HttpClient httpClient = new DefaultHttpClient();
-            String pageSourceCode = "";
+                HttpGet httpGet = new HttpGet(Constants.WEB_SERVICE_ADDRESS + coin + ".json");
+                HttpResponse httpGetResponse = httpClient.execute(httpGet);
+                HttpEntity httpGetEntity = httpGetResponse.getEntity();
+                if (httpGetEntity != null) {
+                    pageSourceCode = EntityUtils.toString(httpGetEntity);
+                }
 
-            HttpGet httpGet = new HttpGet(Constants.WEB_SERVICE_ADDRESS  + coin + ".json");
-            HttpResponse httpGetResponse = httpClient.execute(httpGet);
-            HttpEntity httpGetEntity = httpGetResponse.getEntity();
-            if (httpGetEntity != null) {
-                pageSourceCode = EntityUtils.toString(httpGetEntity);
+
+                if (pageSourceCode == null) {
+                    Log.e(Constants.TAG, "[COMMUNICATION THREAD] Error getting the information from the webservice!");
+                    return;
+                } else
+                    Log.i(Constants.TAG, pageSourceCode);
+
+
+                JSONObject content = new JSONObject(pageSourceCode);
+                JSONObject time = content.getJSONObject("time");
+                JSONObject bpi = content.getJSONObject("bpi");
+                JSONObject curr = bpi.getJSONObject(coin);
+
+                String updateTimestamp = time.getString("updated");
+                String rate = curr.getString("rate");
+
+                info = new WeatherForecastInformation(rate, updateTimestamp);
+
+                data.put(coin, info);
+                serverThread.setData(data);
+
+                printWriter.println(info);
+                printWriter.flush();
             }
-
-
-            if (pageSourceCode == null) {
-                Log.e(Constants.TAG, "[COMMUNICATION THREAD] Error getting the information from the webservice!");
-                return;
-            } else
-                Log.i(Constants.TAG, pageSourceCode);
-
-
-            JSONObject content = new JSONObject(pageSourceCode);
-            JSONObject time    = content.getJSONObject("time");
-            JSONObject bpi     = content.getJSONObject("bpi");
-            JSONObject curr    = bpi.getJSONObject(coin);
-
-            String updateTimestamp = time.getString("updated");
-            String rate = curr.getString("rate");
-
-            info = new WeatherForecastInformation(rate, updateTimestamp);
-
-            data.put(coin, info);
-            serverThread.setData(data);
-
-            printWriter.println(info);
-            printWriter.flush();
-
         } catch (IOException ioException) {
             Log.e(Constants.TAG, "[COMMUNICATION THREAD] An exception has occurred: " + ioException.getMessage());
             if (Constants.DEBUG) {
