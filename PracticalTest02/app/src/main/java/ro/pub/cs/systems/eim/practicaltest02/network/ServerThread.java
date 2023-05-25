@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import cz.msebera.android.httpclient.client.ClientProtocolException;
@@ -15,6 +16,8 @@ public class ServerThread extends Thread {
 
     private int port = 0;
     private ServerSocket serverSocket = null;
+
+    public String last_update = null;
 
     private HashMap<String, WeatherForecastInformation> data = null;
 
@@ -49,6 +52,10 @@ public class ServerThread extends Thread {
 
     public synchronized void setData(String city, WeatherForecastInformation weatherForecastInformation) {
         this.data.put(city, weatherForecastInformation);
+    }
+
+    public synchronized void setData(HashMap<String, WeatherForecastInformation> data) {
+        this.data = data;
     }
 
     public synchronized HashMap<String, WeatherForecastInformation> getData() {
